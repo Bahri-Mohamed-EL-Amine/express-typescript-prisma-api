@@ -17,9 +17,53 @@ export const listAuthors = async (): Promise<Author[]> => {
 };
 export const getAuthor = async (id: number): Promise<Author | null> => {
   return db.author.findUnique({
-    
     where: {
       id: id,
+    },
+  });
+};
+
+export const createAuthor = async (
+  author: Omit<Author, "id">
+): Promise<Author> => {
+  const { firstName, lastName } = author;
+  return db.author.create({
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+    },
+    data: {
+      firstName,
+      lastName,
+    },
+  });
+};
+export const updateAuthor = async (
+  author: Omit<Author, "id">,
+  id: number
+): Promise<Author> => {
+  const { firstName, lastName } = author;
+  return db.author.update({
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+    },
+    data: {
+      firstName,
+      lastName,
+    },
+    where: {
+      id,
+    },
+  });
+};
+
+export const deleteAuthor = async (id: number): Promise<void> => {
+  await db.author.delete({
+    where: {
+      id,
     },
   });
 };
