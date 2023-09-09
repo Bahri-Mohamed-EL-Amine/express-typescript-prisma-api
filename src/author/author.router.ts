@@ -13,7 +13,7 @@ authorRouter.get("/", async (req: Request, res, Response) => {
     const authors = await AuthorService.listAuthors();
     return res.status(200).json(authors);
   } catch (e: any) {
-    return res.status(500).json(e.message);
+    return res.status(500).json({ message: e.message });
   }
 });
 
